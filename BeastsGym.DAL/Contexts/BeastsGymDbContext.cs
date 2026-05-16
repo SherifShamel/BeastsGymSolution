@@ -1,10 +1,15 @@
-﻿using BeastsGym.Configurations;
-using BeastsGym.Models;
+﻿using BeastsGym.DAL.Configurations;
+using BeastsGym.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BeastsGym.Contexts
+namespace BeastsGym.DAL.Contexts
 {
-    public class BeastsDbContext : DbContext
+    public class BeastsGymDbContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

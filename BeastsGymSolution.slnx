@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="BeastsGym.BLL/BeastsGym.BLL.csproj" Id="71e2d153-9460-4710-ba44-45d09bccb1aa" />
+  <Project Path="BeastsGym.DAL/BeastsGym.DAL.csproj" Id="c383bc07-79a2-4e3c-823a-37977fc1d51a" />
   <Project Path="BeastsGym/BeastsGym.csproj" />
 </Solution>

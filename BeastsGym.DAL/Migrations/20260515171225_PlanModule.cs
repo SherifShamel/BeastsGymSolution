@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BeastsGym.Migrations
+namespace BeastsGym.DAL.Migrations
 {
     /// <inheritdoc />
     public partial class PlanModule : Migration
