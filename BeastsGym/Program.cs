@@ -1,3 +1,8 @@
+using BeastsGym.DAL.Contexts;
+using BeastsGym.DAL.Repositories.classes;
+using BeastsGym.DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
 namespace BeastsGym
 {
     public class Program
@@ -8,6 +13,14 @@ namespace BeastsGym
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<BeastsGymDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+            //builder.Services.AddScoped<IPlanRepository, PlanRepository>();
+            builder.Services.AddScoped(typeof(IgenericRepository<>), typeof(GenericRepository<>));
+
 
             var app = builder.Build();
 

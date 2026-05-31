@@ -1,7 +1,6 @@
 ﻿using BeastsGym.DAL.Contexts;
 using BeastsGym.DAL.Entities;
 using BeastsGym.DAL.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +9,16 @@ using System.Threading.Tasks;
 
 namespace BeastsGym.DAL.Repositories.classes
 {
-    public class PlanRepository : GenericRepository<Plan>, IPlanRepository
+    public class MemberRepository : GenericRepository<Member>, IMemberRepository
     {
-        private readonly BeastsGymDbContext dbContext;
-        public PlanRepository(BeastsGymDbContext _dbContext) : base(_dbContext)
+        private readonly BeastsGymDbContext _dbContext;
+
+        public MemberRepository(BeastsGymDbContext dbContext) : base(dbContext)
         {
-            dbContext = _dbContext;
+            this._dbContext = dbContext;
         }
+
+        //New Features
+
     }
 }

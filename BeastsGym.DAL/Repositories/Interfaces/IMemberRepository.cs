@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace BeastsGym.DAL.Repositories.Interfaces
 {
-    public interface IPlanRepository :IgenericRepository<Plan>
+    public interface IMemberRepository
     {
-        
+        //For Extension
     }
 }
