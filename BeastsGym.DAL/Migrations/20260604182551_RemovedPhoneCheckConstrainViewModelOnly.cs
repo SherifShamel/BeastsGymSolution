@@ -8,16 +8,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BeastsGym.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class AllModules : Migration
+    public partial class RemovedPhoneCheckConstrainViewModelOnly : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "PlanId",
-                table: "Plans",
-                newName: "Id");
-
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -39,7 +34,7 @@ namespace BeastsGym.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     JoinDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
@@ -55,7 +50,26 @@ namespace BeastsGym.DAL.Migrations
                 {
                     table.PrimaryKey("PK_Members", x => x.Id);
                     table.CheckConstraint("EmailCheck", "Email LIKE '_%@_%._%'");
-                    table.CheckConstraint("PhoneCheck", "PhoneNumber LIKE '01[0-2,5][0-9]{8}'");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Plans",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PlanName = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    Duration = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GetDate()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Plans", x => x.Id);
+                    table.CheckConstraint("DurationCheckValue", "Duration Between 1 AND 365");
                 });
 
             migrationBuilder.CreateTable(
@@ -82,7 +96,6 @@ namespace BeastsGym.DAL.Migrations
                 {
                     table.PrimaryKey("PK_Trainers", x => x.Id);
                     table.CheckConstraint("EmailCheck1", "Email LIKE '_%@_%._%'");
-                    table.CheckConstraint("PhoneCheck1", "PhoneNumber LIKE '01[0-2,5][0-9]{8}'");
                 });
 
             migrationBuilder.CreateTable(
@@ -287,15 +300,13 @@ namespace BeastsGym.DAL.Migrations
                 name: "Members");
 
             migrationBuilder.DropTable(
+                name: "Plans");
+
+            migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Trainers");
-
-            migrationBuilder.RenameColumn(
-                name: "Id",
-                table: "Plans",
-                newName: "PlanId");
         }
     }
 }

@@ -177,7 +177,6 @@ namespace BeastsGym.DAL.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Photo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -194,8 +193,6 @@ namespace BeastsGym.DAL.Migrations
                     b.ToTable("Members", t =>
                         {
                             t.HasCheckConstraint("EmailCheck", "Email LIKE '_%@_%._%'");
-
-                            t.HasCheckConstraint("PhoneCheck", "PhoneNumber LIKE '01[0-2,5][0-9]{8}'");
                         });
                 });
 
@@ -385,9 +382,6 @@ namespace BeastsGym.DAL.Migrations
                         {
                             t.HasCheckConstraint("EmailCheck", "Email LIKE '_%@_%._%'")
                                 .HasName("EmailCheck1");
-
-                            t.HasCheckConstraint("PhoneCheck", "PhoneNumber LIKE '01[0-2,5][0-9]{8}'")
-                                .HasName("PhoneCheck1");
 
                             t.Property("HireDate")
                                 .HasColumnName("HireDate1");

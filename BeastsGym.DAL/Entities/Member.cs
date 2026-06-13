@@ -2,7 +2,7 @@
 {
     public class Member : GymUser
     {
-        public string Photo { get; set; }
+        public string? Photo { get; set; }
         public HealthRecord HealthRecord { get; set; } = null!;
 
         public ICollection<Membership> Memberships = new HashSet<Membership>();

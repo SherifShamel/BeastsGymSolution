@@ -1,3 +1,6 @@
+using BeastsGym.BLL.Classes;
+using BeastsGym.BLL.Interfaces;
+using BeastsGym.BLL.Utilities;
 using BeastsGym.DAL.Contexts;
 using BeastsGym.DAL.Repositories.classes;
 using BeastsGym.DAL.Repositories.Interfaces;
@@ -19,8 +22,12 @@ namespace BeastsGym
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             //builder.Services.AddScoped<IPlanRepository, PlanRepository>();
-            builder.Services.AddScoped(typeof(IgenericRepository<>), typeof(GenericRepository<>));
+            //builder.Services.AddScoped(typeof(IgenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<IMemberServices, MemberServices>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<ISessionServices, SessionServices>();
 
+            builder.Services.AddAutoMapper(m => m.AddProfile(new MappingProfile()));
 
             var app = builder.Build();
 

@@ -25,7 +25,7 @@ namespace BeastsGym.DAL.Configurations
             builder.ToTable(tb =>
             {
                 tb.HasCheckConstraint("EmailCheck", "Email LIKE '_%@_%._%'");
-                tb.HasCheckConstraint("PhoneCheck", "PhoneNumber LIKE '01[0-2,5][0-9]{8}'");
+                //tb.HasCheckConstraint("PhoneCheck", "PhoneNumber LIKE '(010|011|012|015)\\d{8}$'");
             });
 
             builder.OwnsOne(x => x.Address, address =>
