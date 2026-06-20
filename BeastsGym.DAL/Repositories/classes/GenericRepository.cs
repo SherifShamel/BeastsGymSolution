@@ -67,5 +67,8 @@ namespace BeastsGym.DAL.Repositories.classes
         {
             return await _dbContext.Set<TEntity>().AnyAsync(predicate, ct);
         }
+
+        public Task<int> CountAsync(Expression<Func<TEntity, bool>>? predicate = null, CancellationToken ct = default) 
+            => predicate is null ? _dbContext.Set<TEntity>().AsNoTracking().CountAsync(ct) : _dbContext.Set<TEntity>().CountAsync(predicate, ct);
     }
 }

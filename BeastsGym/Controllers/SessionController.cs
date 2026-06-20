@@ -1,12 +1,15 @@
 ﻿using BeastsGym.BLL.Interfaces;
 using BeastsGym.BLL.ViewModels.SessionViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BeastsGym.Controllers
 {
+    [Authorize]
     public class SessionController : Controller
     {
+
         private readonly ISessionServices services;
 
         public SessionController(ISessionServices services)
@@ -19,6 +22,7 @@ namespace BeastsGym.Controllers
             return View(sessions);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CancellationToken ct)
         {
             await PopulateDropDownAsync(ct);
@@ -26,6 +30,7 @@ namespace BeastsGym.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreateSessionViewModel model, CancellationToken ct)
         {
             if (!ModelState.IsValid)

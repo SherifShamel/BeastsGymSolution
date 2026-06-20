@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeastsGym.DAL.Migrations
 {
     [DbContext(typeof(BeastsGymDbContext))]
-    [Migration("20260604182551_RemovedPhoneCheckConstrainViewModelOnly")]
-    partial class RemovedPhoneCheckConstrainViewModelOnly
+    [Migration("20260616174706_initial migration")]
+    partial class initialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

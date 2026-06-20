@@ -1,4 +1,5 @@
-﻿using BeastsGym.BLL.Interfaces;
+﻿using AutoMapper;
+using BeastsGym.BLL.Interfaces;
 using BeastsGym.BLL.ViewModels.MemberViewModel;
 using BeastsGym.DAL.Entities;
 using BeastsGym.DAL.Repositories.Interfaces;
@@ -13,10 +14,14 @@ namespace BeastsGym.BLL.Classes
     public class MemberServices : IMemberServices
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IAttachementServices attachementServices;
+        private readonly IMapper mapper;
 
-        public MemberServices(IUnitOfWork unitOfWork)
+        public MemberServices(IUnitOfWork unitOfWork, IAttachementServices attachementServices, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.attachementServices = attachementServices;
+            this.mapper = mapper;
         }
         //GET
         public async Task<IEnumerable<MemberViewModel>> GetAllMembersAsync(CancellationToken ct = default)
@@ -55,9 +60,9 @@ namespace BeastsGym.BLL.Classes
             };
 
             var ActiveMemberShip = await unitOfWork.GetRepository<Membership>()
-                                    .FirstOrDefaultAsync(mb=>mb.MemberId == memberId && mb.EndDate > DateTime.Now, false, ct);
+                                    .FirstOrDefaultAsync(mb => mb.MemberId == memberId && mb.EndDate > DateTime.Now, false, ct);
 
-            if(ActiveMemberShip is not null)
+            if (ActiveMemberShip is not null)
             {
                 var activePlan = await unitOfWork.GetRepository<Plan>().GetById(ActiveMemberShip.PlanId, ct);
                 MemberVM.PlanName = activePlan?.PlanName;
@@ -130,8 +135,21 @@ namespace BeastsGym.BLL.Classes
                     Note = model.HealthRecordViewModel.Note
                 }
             };
+            //var Member = mapper.Map<CreateMemberViewModel,Member>(model);
+
             unitOfWork.GetRepository<Member>().Add(Member);
+
+
+
             var Result = await unitOfWork.CompleteAsync();
+            if (Result > 0)
+            {
+                var Photo = await attachementServices.UploadAsync(model.photoFile.OpenReadStream(), model.photoFile.FileName, "MembersImages", ct);
+
+                if (string.IsNullOrEmpty(Photo)) return false;
+
+                Member.Photo = Photo;
+            }
             return Result > 0;
         }
 
@@ -165,6 +183,15 @@ namespace BeastsGym.BLL.Classes
             if (HasFutureSessions) return false;
 
             unitOfWork.GetRepository<Member>().Delete(memberId);
+            var MemberRepo = unitOfWork.GetRepository<Member>();
+            var member = await MemberRepo.GetById(memberId, ct);
+
+
+            if (member.Photo is not null)
+            {
+                attachementServices.Delete(member.Photo, "MembersImages");
+            }
+
 
             var Result = await unitOfWork.CompleteAsync();
             return Result > 0;

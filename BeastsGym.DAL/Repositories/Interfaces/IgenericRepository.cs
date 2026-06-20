@@ -24,5 +24,7 @@ namespace BeastsGym.DAL.Repositories.Interfaces
         Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, bool isTracked = false, CancellationToken ct = default);
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, bool isTracked = false, CancellationToken ct = default);
 
+        Task<int> CountAsync(Expression<Func<TEntity,bool>>? predicate = null, CancellationToken ct = default);
+
     }
 }

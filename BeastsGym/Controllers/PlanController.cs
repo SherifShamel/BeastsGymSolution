@@ -2,11 +2,13 @@
 using BeastsGym.DAL.Entities;
 using BeastsGym.DAL.Repositories.classes;
 using BeastsGym.DAL.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BeastsGym.Controllers
 {
+    [Authorize]
     public class PlanController : Controller
     {
 

@@ -1,16 +1,25 @@
+using BeastsGym.BLL.Interfaces;
 using BeastsGym.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace BeastsGym.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        
+        private readonly IAnalyticsServices analyticsServices;
 
-        public IActionResult Index()
+        public HomeController( IAnalyticsServices analyticsServices)
         {
-            return View();
+            this.analyticsServices = analyticsServices;
+        }
+
+        public async Task<IActionResult> Index(CancellationToken ct)
+        {
+            var Data = await analyticsServices.GetAnalyticsDataAsync(ct);
+            return View(Data);
         }
 
         public IActionResult Privacy()

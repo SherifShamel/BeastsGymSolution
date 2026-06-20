@@ -1,9 +1,11 @@
 ﻿using BeastsGym.BLL.Interfaces;
 using BeastsGym.BLL.ViewModels.MemberViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeastsGym.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class MemberController : Controller
     {
         private readonly IMemberServices iMemberServices;

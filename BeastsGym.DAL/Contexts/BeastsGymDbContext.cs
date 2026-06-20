@@ -1,5 +1,7 @@
 ﻿using BeastsGym.DAL.Configurations;
 using BeastsGym.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BeastsGym.DAL.Contexts
 {
-    public class BeastsGymDbContext : DbContext
+    public class BeastsGymDbContext : IdentityDbContext<ApplicationUser>
     {
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
@@ -23,7 +25,9 @@ namespace BeastsGym.DAL.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.ApplyConfiguration(new PlanConfiguration());
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
         }
 
         public DbSet<Plan> Plans { get; set; }

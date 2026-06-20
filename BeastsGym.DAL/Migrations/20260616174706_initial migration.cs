@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BeastsGym.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class RemovedPhoneCheckConstrainViewModelOnly : Migration
+    public partial class initialmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BeastsGym.BLL.ViewModels.MemberViewModel;
 using BeastsGym.BLL.ViewModels.SessionViewModels;
 using BeastsGym.DAL.Entities;
 using System;
@@ -27,6 +28,7 @@ namespace BeastsGym.BLL.Utilities
             CreateMap<Trainer, TrainerSelectViewModel>();
             CreateMap<Category, CategorySelectViewModel>();
             CreateMap<Session, UpdateSessionViewModel>().ReverseMap();
+            CreateMap<Member, CreateMemberViewModel>().ReverseMap();
         }
     }
 }

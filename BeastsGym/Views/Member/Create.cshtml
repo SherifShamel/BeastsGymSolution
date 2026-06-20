@@ -7,7 +7,7 @@
 <header class="mb-4">
     <h3 class="text-primary-color">Add Member</h3>
 </header>
-<form asp-controller="Member" asp-action="CreateMember" method="post">
+<form asp-controller="Member" asp-action="CreateMember" method="post" enctype="multipart/form-data">
 
     <!-- Step navigation -->
     <ul class="nav nav-tabs mb-4" id="addMemberTabs" role="tablist">
@@ -34,6 +34,17 @@
                 <hr class="mt-2">
             </div>
             <div class="row g-3">
+
+                <div class="form-group">
+                    <div class="mt-2">
+                        <img id="photoPreview" src="#" alt="Photo Preview" style="max-width: 200px; display:none;" class="img-thumbnail" />
+                    </div>
+                    <label asp-for="photoFile" class="control-label">Profile Photo <span class="text-danger">*</span></label>
+                    <input asp-for="photoFile" type="file" class="form-control" accept="image/*" id="photoInput" required />
+                    <span asp-validation-for="photoFile" class="text-danger"></span>
+                    <small class="form-control text-muted">Accepted formats: JPG, PNG, GIF (Required)</small>
+                </div>
+
                 <div class="col-12 col-md-6">
                     <label asp-for="Name" class="form-label">Name</label>
                     <input asp-for="Name" class="form-control" />
@@ -140,4 +151,22 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.getElementById('photoInput').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('photoPreview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '#';
+                preview.style.display = 'none';
+            }
+        });
+    </script>
 }

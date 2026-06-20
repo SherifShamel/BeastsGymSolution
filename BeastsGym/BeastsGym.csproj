@@ -14,4 +14,8 @@
     <ProjectReference Include="..\BeastsGym.BLL\BeastsGym.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MembersImages\" />
+  </ItemGroup>
+
 </Project>
